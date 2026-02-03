@@ -19,7 +19,7 @@ public class JavaApplication1 {
     public static void main(String[] args) {
         Scanner ler = new Scanner(System.in);
         pessoa individuo = new pessoa();
-        System.out.println("Informe seu nome");    
+        System.out.println("Informe seu nome agora");    
         individuo.nome = ler.next();
         individuo.apresentação();
         
