@@ -33,8 +33,8 @@ public class ProdutoDAO {
                 Produto p = new Produto();
                 p.setId(rs.getInt("id"));
                 p.setDescricao(rs.getString("descricao"));
-                p.setValorCompra(rs.getBigDecimal("valor_compra"));
-                p.setValorVenda(rs.getBigDecimal("valor_venda"));
+                p.setValorCompra(rs.getFloat("valor_compra"));
+                p.setValorVenda(rs.getFloat("valor_venda"));
                 p.setMarca(rs.getString("marca"));
                 p.setQuantidade(rs.getInt("quantidade"));
                 lista.add(p);
@@ -56,8 +56,8 @@ public class ProdutoDAO {
                     Produto p = new Produto();
                     p.setId(rs.getInt("id"));
                     p.setDescricao(rs.getString("descricao"));
-                    p.setValorCompra(rs.getBigDecimal("valor_compra"));
-                    p.setValorVenda(rs.getBigDecimal("valor_venda"));
+                    p.setValorCompra(rs.getFloat("valor_compra"));
+                    p.setValorVenda(rs.getFloat("valor_venda"));
                     p.setMarca(rs.getString("marca"));
                     p.setQuantidade(rs.getInt("quantidade"));
                     return p;
@@ -75,8 +75,8 @@ public class ProdutoDAO {
              PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setString(1, p.getDescricao());
-            ps.setBigDecimal(2, p.getValorCompra());
-            ps.setBigDecimal(3, p.getValorVenda());
+            ps.setFloat(2, p.getValorCompra());
+            ps.setFloat(3, p.getValorVenda());
             ps.setString(4, p.getMarca());
             ps.setInt(5, p.getQuantidade());
             ps.executeUpdate();
@@ -92,8 +92,8 @@ public class ProdutoDAO {
              PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setString(1, p.getDescricao());
-            ps.setBigDecimal(2, p.getValorCompra());
-            ps.setBigDecimal(3, p.getValorVenda());
+            ps.setFloat(2, p.getValorCompra());
+            ps.setFloat(3, p.getValorVenda());
             ps.setString(4, p.getMarca());
             ps.setInt(5, p.getQuantidade());
             ps.setInt(6, p.getId());
