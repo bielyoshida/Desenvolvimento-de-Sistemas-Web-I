@@ -1,6 +1,7 @@
 package dao;
 
-import modelo.Produto;
+import java.math.BigDecimal;
+import modelo.produto;
 
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
@@ -17,24 +18,24 @@ public class ProdutoDAO {
             InitialContext ctx = new InitialContext();
             ds = (DataSource) ctx.lookup("java:comp/env/jdbc/lojabd");
         } catch (Exception e) {
-            throw new RuntimeException("Erro ao localizar DataSource jdbc/LojaDS", e);
+            throw new RuntimeException("Erro ao localizar DataSource jdbc/lojabd", e);
         }
     }
 
-    public List<Produto> listar() {
+    public List<produto> listar() {
         String sql = "SELECT id, descricao, valor_compra, valor_venda, marca, quantidade FROM produtos ORDER BY id DESC";
-        List<Produto> lista = new ArrayList<>();
+        List<produto> lista = new ArrayList<>();
 
         try (Connection con = ds.getConnection();
              PreparedStatement ps = con.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
-                Produto p = new Produto();
+                produto p = new produto();
                 p.setId(rs.getInt("id"));
                 p.setDescricao(rs.getString("descricao"));
-                p.setValorCompra(rs.getFloat("valor_compra"));
-                p.setValorVenda(rs.getFloat("valor_venda"));
+                p.setValorCompra(rs.getBigDecimal("valor_compra"));
+                p.setValorVenda(rs.getBigDecimal("valor_venda"));
                 p.setMarca(rs.getString("marca"));
                 p.setQuantidade(rs.getInt("quantidade"));
                 lista.add(p);
@@ -45,7 +46,7 @@ public class ProdutoDAO {
         return lista;
     }
 
-    public Produto buscarPorId(int id) {
+    public produto buscarPorId(int id) {
         String sql = "SELECT id, descricao, valor_compra, valor_venda, marca, quantidade FROM produtos WHERE id = ?";
         try (Connection con = ds.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -53,11 +54,11 @@ public class ProdutoDAO {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    Produto p = new Produto();
+                    produto p = new produto();
                     p.setId(rs.getInt("id"));
                     p.setDescricao(rs.getString("descricao"));
-                    p.setValorCompra(rs.getFloat("valor_compra"));
-                    p.setValorVenda(rs.getFloat("valor_venda"));
+                    p.setValorCompra(rs.getBigDecimal("valor_compra"));
+                    p.setValorVenda(rs.getBigDecimal("valor_venda"));
                     p.setMarca(rs.getString("marca"));
                     p.setQuantidade(rs.getInt("quantidade"));
                     return p;
@@ -69,14 +70,14 @@ public class ProdutoDAO {
         return null;
     }
 
-    public void inserir(Produto p) {
+    public void inserir(produto p) {
         String sql = "INSERT INTO produtos (descricao, valor_compra, valor_venda, marca, quantidade) VALUES (?, ?, ?, ?, ?)";
         try (Connection con = ds.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setString(1, p.getDescricao());
-            ps.setFloat(2, p.getValorCompra());
-            ps.setFloat(3, p.getValorVenda());
+            ps.setBigDecimal(2, p.getValorCompra());
+            ps.setBigDecimal(3, p.getValorVenda());
             ps.setString(4, p.getMarca());
             ps.setInt(5, p.getQuantidade());
             ps.executeUpdate();
@@ -86,14 +87,14 @@ public class ProdutoDAO {
         }
     }
 
-    public void atualizar(Produto p) {
+    public void atualizar(produto p) {
         String sql = "UPDATE produtos SET descricao=?, valor_compra=?, valor_venda=?, marca=?, quantidade=? WHERE id=?";
         try (Connection con = ds.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setString(1, p.getDescricao());
-            ps.setFloat(2, p.getValorCompra());
-            ps.setFloat(3, p.getValorVenda());
+            ps.setBigDecimal(2, p.getValorCompra());
+            ps.setBigDecimal(3, p.getValorVenda());
             ps.setString(4, p.getMarca());
             ps.setInt(5, p.getQuantidade());
             ps.setInt(6, p.getId());
