@@ -8,13 +8,13 @@ public class Conexao {
 
     // URL de conexão com o banco PostgreSQL
     // Formato: jdbc:postgresql://host:porta/nome_do_banco
-    private static final String URL = "jdbc:postgresql://localhost:5432/teste1";
+    private static final String URL = "jdbc:postgresql://localhost:5432/teste2";
 
     // Usuário do banco de dados
     private static final String USUARIO = "postgres";
 
     // Senha do banco de dados
-    private static final String SENHA = "5432";
+    private static final String SENHA = "123";
 
     /**
      * Método responsável por criar e retornar uma conexão com o banco de dados.

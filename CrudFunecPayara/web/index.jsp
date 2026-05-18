@@ -20,6 +20,10 @@
         <a href="produtos?acao=listar">Ir para lista de Produtos</a><br><br>
         
         <a href="clientes?acao=listar">Ir para lista de Clientes</a>
+        
+        <a href="formVenda.jsp">Ir para Vendas</a>
+        
+        
     </p>
 
 </body>
