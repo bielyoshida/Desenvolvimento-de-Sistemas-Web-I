@@ -21,33 +21,34 @@ import model.Cliente;
  */
 @WebServlet("/vendas")
 public class VendaController extends HttpServlet {
-    
-
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-                ClienteDAO clienteDAO = new ClienteDAO();
-                List<Cliente> listaCliente = clienteDAO.listar();
-                request.setAttribute("listaCliente", listaCliente);
-                request.getRequestDispatcher("listCliente.jsp").forward(request, response);
-
-        
-        
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+        throws ServletException, IOException {
+        String acao = request.getParameter("acao");
+        if (acao == null || acao.trim().isEmpty()){
+            acao = "novo";
+        }
+        try {
+            switch (acao) {
+                case "listar":
+                    listar (request, response);
+                    break;
+                case "excluir":
+                    excluir (request, response);
+                    break;
+                case "novo":
+                    novo (request, response);
+                    break;
+                default:
+                    abrirFormulario (request, response);
+            }
+        }catch(RuntimeException ex){
+            request.setAttribute("erro", ex.getMessage());
+            abrirFormulario (request, response);
+
+        }
+                
     }
 
     /**
