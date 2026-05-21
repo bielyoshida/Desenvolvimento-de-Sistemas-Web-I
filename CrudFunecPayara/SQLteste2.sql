@@ -39,3 +39,42 @@ CREATE TABLE produtos
     quantidade integer,
     CONSTRAINT produtos_pkey PRIMARY KEY (id)
 );
+
+CREATE TABLE venda (
+    codigo SERIAL PRIMARY KEY,
+    codigo_cliente INTEGER NOT NULL,
+
+    valor_compra NUMERIC(10,2) NOT NULL DEFAULT 0,
+    valor_desconto NUMERIC(10,2) NOT NULL DEFAULT 0,
+    valor_total NUMERIC(10,2) NOT NULL DEFAULT 0,
+
+    CONSTRAINT fk_venda_cliente
+        FOREIGN KEY (codigo_cliente)
+        REFERENCES cliente(codigo)
+        ON DELETE RESTRICT
+);
+
+
+/*
+=====================================================
+ TABELA ITENS DA VENDA
+=====================================================
+*/
+
+CREATE TABLE itens_venda_produto (
+    codigo SERIAL PRIMARY KEY,
+    codigo_venda INTEGER NOT NULL,
+    codigo_produto INTEGER NOT NULL,
+    quantidade INTEGER NOT NULL,
+    valor_unitario NUMERIC(10,2) NOT NULL DEFAULT 0,
+
+    CONSTRAINT fk_item_venda
+        FOREIGN KEY (codigo_venda)
+        REFERENCES venda(codigo)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_item_produto
+        FOREIGN KEY (codigo_produto)
+        REFERENCES produtos(id)
+        ON DELETE RESTRICT
+);
